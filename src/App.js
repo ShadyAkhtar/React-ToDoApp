@@ -1,11 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
 import Header from './MyComponents/Header.js';
 import {Todos} from './MyComponents/Todos.js';
 import {AddTodo} from './MyComponents/AddTodo.js';
+import {About} from './MyComponents/About.js';
 // import {TodoItem} from './MyComponents/TodoItem.js';
 import {Footer} from './MyComponents/Footer.js';
 import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
 
 function App(todo) {
   let initTodo; 
@@ -28,7 +34,7 @@ initTodo = [];
   const addTodo = (title, desc) =>{
     console.log("Adding todo", title, desc)
     let sno;
-    if (todos.length==0){
+    if (todos.length === 0){
       sno = 0;
     }
     else{
@@ -52,11 +58,34 @@ initTodo = [];
 
   return (
     <>
+    
+    <Router>
+     
     <Header title="My Todos List" searchBar={true}/>
-    <AddTodo addTodo={addTodo} />
-    <Todos todos={todos} onDelete={onDelete} />
-    {/* <TodoItem /> */}
+
+        <Switch>
+          <Route exact path="/" render={() => {
+            return (
+              <>
+              <AddTodo addTodo={addTodo} />
+              <Todos todos={todos} onDelete={onDelete} />
+              </>
+            )
+          }}>
+          </Route>
+          <Route exact path="/about" >
+            <About />
+          </Route>
+          
+        </Switch>
     <Footer />
+      
+    </Router>
+    
+   
+    
+    
+    {/* <TodoItem /> */}
     
 
     </>
